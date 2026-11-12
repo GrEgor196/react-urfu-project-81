@@ -1,0 +1,25 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "[![hexlet-check](https://github.com/GrEgor196/react-urfu-project-81/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/GrEgor196/react-urfu-project-81/actions)",
+  "homepage": "https://github.com/GrEgor196/react-urfu-project-81#readme",
+  "bugs": {
+    "url": "https://github.com/GrEgor196/react-urfu-project-81/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GrEgor196/react-urfu-project-81.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2"
+  },
+  "types": "./dist/index.d.ts"
+}
