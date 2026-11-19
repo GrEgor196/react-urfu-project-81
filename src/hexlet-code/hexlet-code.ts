@@ -1,5 +1,6 @@
 import FormBuilder from "../form-builder/index.js";
-import { Tag } from "../tag/index.js";
+import type { Form } from "../form/index.js";
+import renderForm from "../form-renderer/index.js";
 
 type Template = Record<string, unknown>;
 
@@ -18,6 +19,11 @@ export default class HexletCode {
 
     callback(form);
 
-    return new Tag("form", { action, method }, form.toString()).toString();
+    const representation: Form = {
+      attributes: { action, method },
+      inputs: form.build(),
+    };
+
+    return renderForm(representation);
   }
 }
