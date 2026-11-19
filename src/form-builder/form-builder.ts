@@ -7,7 +7,7 @@ type InputOptions = TagAttributes & {
 };
 
 export default class FormBuilder {
-  private readonly fields: string[] = [];
+  private readonly fields: Tag[] = [];
 
   public constructor(private readonly template: Template) {}
 
@@ -18,25 +18,36 @@ export default class FormBuilder {
 
     const { as, ...attributes } = options;
     const value = String(this.template[name]);
+    const label = new Tag("label", { for: name }, this.capitalize(name));
 
     if (as === "textarea") {
       this.fields.push(
-        new Tag("textarea", { cols: 20, rows: 40, name, ...attributes }, value).toString(),
+        label,
+        new Tag("textarea", { cols: 20, rows: 40, name, ...attributes }, value),
       );
       return;
     }
 
     this.fields.push(
+      label,
       new Tag("input", {
         name,
         type: "text",
         value,
         ...attributes,
-      }).toString(),
+      }),
     );
   }
 
+  public submit(value = "Save"): void {
+    this.fields.push(new Tag("input", { type: "submit", value }));
+  }
+
   public toString(): string {
-    return this.fields.join("");
+    return this.fields.map((field) => field.toString()).join("");
+  }
+
+  private capitalize(value: string): string {
+    return `${value.charAt(0).toUpperCase()}${value.slice(1)}`;
   }
 }

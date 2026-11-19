@@ -47,8 +47,26 @@ describe("HexletCode.formFor", () => {
     });
 
     expect(form).toBe(
-      '<form action="#" method="get"><input name="gender" type="text" value="m"></form>',
+      '<form action="#" method="get"><label for="gender">Gender</label><input name="gender" type="text" value="m"></form>',
     );
+  });
+
+  test("generates a submit button with the default value", () => {
+    const form = HexletCode.formFor(template, {}, (f) => {
+      f.input("name");
+      f.input("job", { as: "textarea" });
+      f.submit();
+    });
+
+    expect(form).toBe(readFixture("form-with-submit.html"));
+  });
+
+  test("generates a submit button with a custom value", () => {
+    const form = HexletCode.formFor(template, {}, (f) => {
+      f.submit("Wow");
+    });
+
+    expect(form).toBe('<form action="#" method="post"><input type="submit" value="Wow"></form>');
   });
 
   test("throws an error when a field is missing from the template", () => {
