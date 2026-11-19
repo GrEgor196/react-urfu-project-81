@@ -20,7 +20,7 @@ export default class HexletCode {
     callback(form);
 
     const representation: Form = {
-      attributes: { action, method },
+      attributes: { method, action },
       inputs: form.build(),
     };
 

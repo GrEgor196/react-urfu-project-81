@@ -15,8 +15,8 @@ const readFixture = (filename: string): string =>
 
 describe("HexletCode.formFor", () => {
   test.each([
-    [{}, '<form action="#" method="post"></form>'],
-    [{ url: "/users" }, '<form action="/users" method="post"></form>'],
+    [{}, '<form method="post" action="#"></form>'],
+    [{ url: "/users" }, '<form method="post" action="/users"></form>'],
   ])("generates an empty form with options %j", (options, expected) => {
     const form = HexletCode.formFor(template, options, () => {});
 
@@ -47,7 +47,21 @@ describe("HexletCode.formFor", () => {
     });
 
     expect(form).toBe(
-      '<form action="#" method="get"><label for="gender">Gender</label><input name="gender" type="text" value="m"></form>',
+      '<form method="get" action="#"><label for="gender">Gender</label><input name="gender" type="text" value="m"></form>',
+    );
+  });
+
+  test("customizes label text and attributes", () => {
+    const form = HexletCode.formFor(template, {}, (f) => {
+      f.input("name", {
+        label: "User",
+        labelHtml: { class: "form-label", id: "name-label" },
+      });
+      f.submit("Ok");
+    });
+
+    expect(form).toBe(
+      '<form method="post" action="#"><label for="name" class="form-label" id="name-label">User</label><input name="name" type="text" value="rob"><input type="submit" value="Ok"></form>',
     );
   });
 
@@ -66,7 +80,7 @@ describe("HexletCode.formFor", () => {
       f.submit("Wow");
     });
 
-    expect(form).toBe('<form action="#" method="post"><input type="submit" value="Wow"></form>');
+    expect(form).toBe('<form method="post" action="#"><input type="submit" value="Wow"></form>');
   });
 
   test("throws an error when a field is missing from the template", () => {

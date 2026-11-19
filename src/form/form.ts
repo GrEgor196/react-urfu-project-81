@@ -4,6 +4,8 @@ type Field = {
   readonly name: string;
   readonly value: string;
   readonly attributes: Attributes;
+  readonly label?: string;
+  readonly labelAttributes: Attributes;
 };
 
 export type FormInput =

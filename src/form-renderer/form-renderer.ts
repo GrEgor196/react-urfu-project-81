@@ -3,20 +3,24 @@ import { Tag } from "../tag/index.js";
 
 const capitalize = (value: string): string => `${value.charAt(0).toUpperCase()}${value.slice(1)}`;
 
-const renderLabel = (name: string): string =>
-  new Tag("label", { for: name }, capitalize(name)).toString();
+const renderLabel = (input: Exclude<FormInput, { type: "submit" }>): string =>
+  new Tag(
+    "label",
+    { for: input.name, ...input.labelAttributes },
+    input.label ?? capitalize(input.name),
+  ).toString();
 
 const renderInput = (input: FormInput): string => {
   switch (input.type) {
     case "text":
-      return `${renderLabel(input.name)}${new Tag("input", {
+      return `${renderLabel(input)}${new Tag("input", {
         name: input.name,
         type: "text",
         value: input.value,
         ...input.attributes,
       }).toString()}`;
     case "textarea":
-      return `${renderLabel(input.name)}${new Tag(
+      return `${renderLabel(input)}${new Tag(
         "textarea",
         {
           cols: 20,
