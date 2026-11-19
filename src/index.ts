@@ -1,3 +1,1 @@
-export { Tag } from "./tag/index.js";
-
-export default class HexletCode {}
+export { default } from "./hexlet-code/index.js";
