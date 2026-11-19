@@ -1,13 +1,13 @@
-import { Tag, type TagAttributes } from "../tag/index.js";
+import type { Attributes, FormInput } from "../form/index.js";
 
 type Template = Record<string, unknown>;
 
-type InputOptions = TagAttributes & {
+type InputOptions = Attributes & {
   as?: string;
 };
 
 export default class FormBuilder {
-  private readonly fields: Tag[] = [];
+  private inputs: readonly FormInput[] = [];
 
   public constructor(private readonly template: Template) {}
 
@@ -18,36 +18,19 @@ export default class FormBuilder {
 
     const { as, ...attributes } = options;
     const value = String(this.template[name]);
-    const label = new Tag("label", { for: name }, this.capitalize(name));
+    const type = as === "textarea" ? "textarea" : "text";
+    const input: FormInput = { type, name, value, attributes };
 
-    if (as === "textarea") {
-      this.fields.push(
-        label,
-        new Tag("textarea", { cols: 20, rows: 40, name, ...attributes }, value),
-      );
-      return;
-    }
-
-    this.fields.push(
-      label,
-      new Tag("input", {
-        name,
-        type: "text",
-        value,
-        ...attributes,
-      }),
-    );
+    this.inputs = [...this.inputs, input];
   }
 
   public submit(value = "Save"): void {
-    this.fields.push(new Tag("input", { type: "submit", value }));
+    const input: FormInput = { type: "submit", value };
+
+    this.inputs = [...this.inputs, input];
   }
 
-  public toString(): string {
-    return this.fields.map((field) => field.toString()).join("");
-  }
-
-  private capitalize(value: string): string {
-    return `${value.charAt(0).toUpperCase()}${value.slice(1)}`;
+  public build(): readonly FormInput[] {
+    return [...this.inputs];
   }
 }
