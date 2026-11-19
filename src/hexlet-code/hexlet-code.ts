@@ -1,21 +1,23 @@
+import FormBuilder from "../form-builder/index.js";
 import { Tag } from "../tag/index.js";
 
 type Template = Record<string, unknown>;
 
 type FormOptions = {
   url?: string;
+  method?: string;
 };
 
-type FormCallback = (form: object) => void;
+type FormCallback = (form: FormBuilder) => void;
 
 export default class HexletCode {
-  public static formFor(
-    _template: Template,
-    options: FormOptions,
-    _callback: FormCallback,
-  ): string {
+  public static formFor(template: Template, options: FormOptions, callback: FormCallback): string {
     const action = options.url ?? "#";
+    const method = options.method ?? "post";
+    const form = new FormBuilder(template);
 
-    return new Tag("form", { action, method: "post" }).toString();
+    callback(form);
+
+    return new Tag("form", { action, method }, form.toString()).toString();
   }
 }
