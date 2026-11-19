@@ -6,20 +6,28 @@
   "bugs": {
     "url": "https://github.com/GrEgor196/react-urfu-project-81/issues"
   },
+  "license": "ISC",
+  "author": "",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/GrEgor196/react-urfu-project-81.git"
   },
-  "license": "ISC",
-  "author": "",
   "type": "module",
   "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "tsc",
+    "lint": "oxlint && oxfmt --check",
+    "lint:fix": "oxfmt && oxlint --fix",
+    "test": "vitest run",
+    "test-coverage": "vitest run --coverage",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "typescript": "^7.0.2"
-  },
-  "types": "./dist/index.d.ts"
+    "@vitest/coverage-v8": "^5.1.0",
+    "oxfmt": "^0.79.0",
+    "oxlint": "^1.94.0",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  }
 }
