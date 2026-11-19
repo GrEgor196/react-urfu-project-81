@@ -15,10 +15,12 @@
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "files": ["dist"],
   "scripts": {
     "build": "tsc",
     "lint": "oxlint && oxfmt --check",
     "lint:fix": "oxfmt && oxlint --fix",
+    "prepare": "npm run build",
     "test": "vitest run",
     "test-coverage": "vitest run --coverage",
     "typecheck": "tsc --noEmit"

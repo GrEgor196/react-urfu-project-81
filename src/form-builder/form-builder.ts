@@ -2,8 +2,11 @@ import type { Attributes, FormInput } from "../form/index.js";
 
 type Template = Record<string, unknown>;
 
-type InputOptions = Attributes & {
+type InputOptions = {
+  [name: string]: string | number | Attributes | undefined;
   as?: string;
+  label?: string;
+  labelHtml?: Attributes;
 };
 
 export default class FormBuilder {
@@ -16,10 +19,18 @@ export default class FormBuilder {
       throw new Error(`Field '${name}' does not exist in the template.`);
     }
 
-    const { as, ...attributes } = options;
+    const { as, label, labelHtml = {}, ...inputAttributes } = options;
+    const attributes = inputAttributes as Attributes;
     const value = String(this.template[name]);
     const type = as === "textarea" ? "textarea" : "text";
-    const input: FormInput = { type, name, value, attributes };
+    const input: FormInput = {
+      type,
+      name,
+      value,
+      attributes,
+      label,
+      labelAttributes: labelHtml,
+    };
 
     this.inputs = [...this.inputs, input];
   }
