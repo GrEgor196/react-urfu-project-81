@@ -1,11 +1,11 @@
 # Генератор форм на Typescript
 
+[![Quality](https://github.com/GrEgor196/react-urfu-project-81/actions/workflows/quality.yml/badge.svg)](https://github.com/GrEgor196/react-urfu-project-81/actions/workflows/quality.yml)
 [![hexlet-check](https://github.com/GrEgor196/react-urfu-project-81/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/GrEgor196/react-urfu-project-81/actions)
 
 Библиотека, с помощью которой удобно создавать формы в шаблонах сайтов. Она заметно сокращает код описания формы за счет автоматической обработки ошибок и различных контролов.
 
 Учебный проект Хекслета: https://ru.hexlet.io/
-
 
 ## Стек
 
